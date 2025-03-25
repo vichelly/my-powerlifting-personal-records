@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @EntityScan
-@Table(name = "lifter")
+@Table(name = "tb_lifter")
 public class LifterModel {
 
     @Id
