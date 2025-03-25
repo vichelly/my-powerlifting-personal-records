@@ -6,10 +6,9 @@ public class LifterModel {
     Long id;
     PrModel pr;
 
-    public LifterModel(String name, String password, Long id, PrModel pr){
+    public LifterModel(String name, String password, PrModel pr){
         this.name = name;
         this.password = password;
-        this.id = id;
         this.pr = pr;
     }
 
