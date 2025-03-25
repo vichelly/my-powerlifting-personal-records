@@ -3,17 +3,17 @@ package pr.powerlifting_records.Model;
 public class LifterModel {
     String name;
     String password;
-    String id;
+    Long id;
     PrModel pr;
 
-    public LifterModel(String name, String password, String id, PrModel pr){
+    public LifterModel(String name, String password, Long id, PrModel pr){
         this.name = name;
         this.password = password;
         this.id = id;
         this.pr = pr;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
     public String getName() {
@@ -26,7 +26,7 @@ public class LifterModel {
         return pr;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public void setName(String name) {
