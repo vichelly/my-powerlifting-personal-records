@@ -21,6 +21,7 @@ public class PrModel {
     private exercise exercise;
     private float kg;
 
+    // 1 pr tem um lifter
     @ManyToOne
     @JoinColumn(name = "lifter_id", nullable = false)
     private LifterModel lifter;

@@ -21,6 +21,7 @@ public class LifterModel {
     private String name;
     private String password;
     
+    // um lifter tem vários pr
     @OneToMany(mappedBy = "lifter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrModel> pr;
 
