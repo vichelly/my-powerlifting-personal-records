@@ -1,6 +1,7 @@
 # Powerlifting Records API
 
 Esta API permite o registro e gerenciamento de **lifters** e seus **personal records (PRs)**. A aplicação é construída com **Spring Boot** e permite as seguintes operações:
+Para adicionar as informações é necessário PostgreeSQL
 
 - **Cadastrar lifters**
 - **Listar todos os lifters**
@@ -17,24 +18,17 @@ Cria um novo lifter.
 
 - **Requisição**:
   - Método HTTP: **POST**
-  - URL: `/lifter`
+  - URL: `/auth/register`
   - Corpo da requisição (JSON):
     ```json
     {
-      "name": "John Doe",
-      "age": 25
+      "name": "João",
+      "password": "1234"
     }
     ```
 - **Resposta**:
   - Status: `200 OK`
-  - Corpo:
-    ```json
-    {
-      "id": 1,
-      "name": "John Doe",
-      "age": 25
-    }
-    ```
+
 
 #### **GET** /lifter
 Lista todos os lifters.
@@ -47,16 +41,17 @@ Lista todos os lifters.
   - Corpo:
     ```json
     [
-      {
-        "id": 1,
-        "name": "John Doe",
-        "age": 25
-      },
-      {
-        "id": 2,
-        "name": "Jane Doe",
-        "age": 28
-      }
+        {
+            "id": 1,
+            "name": "Vitor",
+            "password": "16"
+        },
+        {
+            "id": 2,
+            "name": "João",
+            "password": "1234"
+        },
+    
     ]
     ```
 
@@ -72,14 +67,14 @@ Lista todos os PRs de um lifter.
     ```json
     [
       {
-        "id": 1,
-        "lift": "Squat",
-        "weight": 150
+          "id": 2,
+          "exercise": "BENCHPRESS",
+          "kg": 130.0
       },
       {
-        "id": 2,
-        "lift": "Deadlift",
-        "weight": 180
+          "id": 3,
+          "exercise": "BENCHPRESS",
+          "kg": 130.0
       }
     ]
     ```
@@ -95,20 +90,13 @@ Adiciona um novo PR para um lifter.
   - Corpo da requisição (JSON):
     ```json
     {
-      "lift": "Squat",
-      "weight": 160
+      "exercise": "BENCHPRESS",
+      "kg": 130.0
     }
     ```
 - **Resposta**:
   - Status: `200 OK`
-  - Corpo:
-    ```json
-    {
-      "id": 3,
-      "lift": "Squat",
-      "weight": 160
-    }
-    ```
+  PR adicionado com sucesso.
 
 #### **DELETE** /lifter/{id}/pr/{prId}
 Deleta um PR de um lifter.
@@ -118,18 +106,5 @@ Deleta um PR de um lifter.
   - URL: `/lifter/{id}/pr/{prId}` (substitua `{id}` pelo ID do lifter e `{prId}` pelo ID do PR a ser deletado)
 - **Resposta**:
   - Status: `204 No Content`
-  - Corpo: Nenhum conteúdo
 
 ---
-
-## Como testar a API usando Postman
-
-### 1. Criar um Lifter
-- Método: **POST**
-- URL: `http://localhost:8080/lifter`
-- Corpo (JSON):
-  ```json
-  {
-    "name": "John Doe",
-    "age": 25
-  }
