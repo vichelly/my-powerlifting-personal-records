@@ -1,5 +1,7 @@
 package pr.powerlifting_records.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +26,7 @@ public class PrModel {
     // 1 PR tem um lifter
     @ManyToOne
     @JoinColumn(name = "lifter_id", nullable = false) // lifter_id = foreign key
+    @JsonBackReference
     private LifterModel lifter;
 
     public enum Exercise {

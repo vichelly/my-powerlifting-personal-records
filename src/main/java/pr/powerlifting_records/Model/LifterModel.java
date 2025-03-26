@@ -2,6 +2,8 @@ package pr.powerlifting_records.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,5 +30,6 @@ public class LifterModel {
     
     // um lifter tem vários pr, mapear os pr por lifter
     @OneToMany(mappedBy = "lifter", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<PrModel> pr;
 }
