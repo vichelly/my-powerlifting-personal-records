@@ -6,25 +6,30 @@ import org.springframework.web.bind.annotation.RestController;
 import pr.powerlifting_records.Model.LifterModel;
 import pr.powerlifting_records.Model.PrModel;
 import pr.powerlifting_records.Repository.LifterRepository;
+import pr.powerlifting_records.Repository.PrRepository;  // Adicione esta linha
 
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("/lifter")
 public class LifterController {
     
     private LifterRepository lifterRepository;
+    private PrRepository prRepository;  // Declare a variável para o prRepository
 
-    public LifterController(LifterRepository lifterRepository){
+    // Injete o prRepository no construtor
+    public LifterController(LifterRepository lifterRepository, PrRepository prRepository) {
         this.lifterRepository = lifterRepository;
+        this.prRepository = prRepository;
     }
 
     @GetMapping()
@@ -39,7 +44,6 @@ public class LifterController {
 
     @GetMapping("/{id}/prs")
     public ResponseEntity<?> prList(@PathVariable Long id){
-
         Optional<LifterModel> lifter = lifterRepository.findById(id);
 
         if(lifter.isPresent()){
@@ -50,7 +54,6 @@ public class LifterController {
         }
     }
     
-
     @PostMapping("/{id}/prs")
     public ResponseEntity<?> adicionarPr(@PathVariable Long id, @RequestBody PrModel pr) {
         Optional<LifterModel> lifterOptional = lifterRepository.findById(id);
@@ -66,4 +69,16 @@ public class LifterController {
         }
     }
     
+    @DeleteMapping("/{lifterId}/pr/{id}")
+    public ResponseEntity<String> deletePr(@PathVariable Long lifterId, @PathVariable Long id) {
+        Optional<PrModel> prOptional = prRepository.findById(id);
+        
+        if (!prOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PR não encontrado.");
+        }
+        
+        prRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("PR deletado com sucesso.");
+    }
+
 }
