@@ -60,7 +60,7 @@ Lista todos os PRs de um lifter.
 
 - **Requisição**:
   - Método HTTP: **GET**
-  - URL: `/lifter/{id}/prs` (substitua `{id}` pelo ID do lifter)
+  - URL: `/lifter/{lifterId}/prs` (substitua `{lifterId}` pelo ID do lifter)
 - **Resposta**:
   - Status: `200 OK`
   - Corpo:
@@ -86,7 +86,7 @@ Adiciona um novo PR para um lifter.
 
 - **Requisição**:
   - Método HTTP: **POST**
-  - URL: `/lifter/{id}/prs` (substitua `{id}` pelo ID do lifter)
+  - URL: `/lifter/{lifterId}/prs` (substitua `{lifterId}` pelo ID do lifter)
   - Corpo da requisição (JSON):
     ```json
     {
@@ -97,6 +97,24 @@ Adiciona um novo PR para um lifter.
 - **Resposta**:
   - Status: `200 OK`
   PR adicionado com sucesso.
+
+#### **PUT** /lifter/{lifterId}/prs/{prId}
+Atualizar um PR
+
+- **Requisição**:
+  - Método HTTP: **PUT**
+  - URL: `/lifter/{lifterId}/prs/{prId}` 
+  - Corpo da req (JSON):
+  ```json
+    {
+      "exercise": "BENCHPRESS",
+      "kg": 180
+    }
+  ```
+- **Resposta**:
+  - Status: `204 No Content`
+
+---
 
 #### **DELETE** /lifter/{id}/pr/{prId}
 Deleta um PR de um lifter.
