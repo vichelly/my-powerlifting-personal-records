@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/lifter")
@@ -67,6 +69,29 @@ public class LifterController {
         } else {
             return ResponseEntity.status(404).body("Lifter não encontrado.");
         }
+    }
+
+    @PutMapping("{id}/prs/{prId}")
+    public ResponseEntity<?> updatePr(@PathVariable Long id, @PathVariable Long prId, @RequestBody PrModel pr) {
+        Optional<LifterModel> lifterOptional = lifterRepository.findById(id);
+
+        if (!lifterOptional.isPresent()) {
+            return ResponseEntity.status(404).body("Lifter não encontrado.");
+        }
+        Optional<PrModel> prOptional = prRepository.findById(prId);
+
+        if (!prOptional.isPresent()) {
+            return ResponseEntity.status(404).body("PR não encontrado.");
+        }
+
+        PrModel prToUpdate = prOptional.get();
+        // Atualizando os campos diretamente
+
+        prToUpdate.setExercise(pr.getExercise());   // Atualizando o tipo de exercício
+        prToUpdate.setKg(pr.getKg());               // Atualizando o peso levantado
+        prRepository.save(prToUpdate);
+
+        return ResponseEntity.ok("PR atualizado com sucesso.");
     }
     
     @DeleteMapping("/{lifterId}/pr/{id}")
