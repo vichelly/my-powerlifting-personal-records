@@ -1,7 +1,6 @@
 package pr.powerlifting_records.Controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import pr.powerlifting_records.Model.LifterModel;
 import pr.powerlifting_records.Model.PrModel;
@@ -13,20 +12,14 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
 @RequestMapping("/lifter")
 public class LifterController {
     
-    private LifterRepository lifterRepository;
-    private PrRepository prRepository;  // Declare a variável para o prRepository
+    private final LifterRepository lifterRepository;
+    private final PrRepository prRepository;  // Declare a variável para o prRepository
 
     // Injete o prRepository no construtor
     public LifterController(LifterRepository lifterRepository, PrRepository prRepository) {
@@ -43,6 +36,19 @@ public class LifterController {
     public LifterModel createLifter(@RequestBody LifterModel lifter) {
         return lifterRepository.save(lifter);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateLifterWeight(@PathVariable Long id, @RequestBody float lifterWeight) {
+        Optional<LifterModel> lifterOptional = lifterRepository.findById(id);
+        if (lifterOptional.isPresent()) {
+            LifterModel lifter = lifterOptional.get();
+            lifter.setWeight(lifterWeight);
+            lifterRepository.save(lifter);
+            return ResponseEntity.ok("Lifter atualizado com sucesso.");
+        }else{
+            return ResponseEntity.status(404).body("Lifter não encontrado.");
+        }
+    };
 
     @GetMapping("/{id}/prs")
     public ResponseEntity<?> prList(@PathVariable Long id){
