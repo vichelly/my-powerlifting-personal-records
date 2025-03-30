@@ -27,6 +27,7 @@ public class LifterModel {
     private Long id;
     private String name;
     private String password;
+    private float weight;
     
     // um lifter tem vários pr, mapear os pr por lifter
     @OneToMany(mappedBy = "lifter", cascade = CascadeType.ALL, orphanRemoval = true)
