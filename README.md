@@ -55,6 +55,19 @@ Lista todos os lifters.
     ]
     ```
 
+#### **PATCH** /lifter/{idLifter}
+Altera o weight do lifter
+
+- **Requisição**:
+  - Método HTTP: **PATCH**
+  - URL: `/lifter`
+- **Resposta**:
+  - Status: `200 OK`
+  - Corpo:
+    ```json
+    68.4
+    ```
+
 #### **GET** /lifter/{id}/prs
 Lista todos os PRs de um lifter.
 
