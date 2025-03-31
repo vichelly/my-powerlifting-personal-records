@@ -30,6 +30,21 @@ Cria um novo lifter.
 - **Resposta**:
   - Status: `200 OK`
 
+#### **POST** /lifter
+Login de lifter.
+
+- **Requisição**:
+  - Método HTTP: **POST**
+  - URL: `/auth/login`
+  - Corpo da requisição (JSON):
+    ```json
+    {
+      "name": "João",
+      "password": "1234"
+    }
+    ```
+- **Resposta**:
+  - Status: `200 OK`
 
 #### **GET** /lifter
 Lista todos os lifters.
