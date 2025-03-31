@@ -24,13 +24,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerLifter(@RequestBody LifterModel lifter) {
+    public ResponseEntity registerLifter(@RequestBody LifterModel lifter) {
 
-        if (lifterRepository.findByNameAndPassword(lifter.getName(), lifter.getPassword()).isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Já existe usuário com noome ou senha iguais registrado.");
+        Optional<LifterModel> currentLifter = lifterRepository.findByNameAndPassword(lifter.getName(), lifter.getPassword());
+        if (currentLifter.isPresent()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(currentLifter);
         }
-        lifterRepository.save(lifter);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Lifter cadastrado.");
+        LifterModel lifterResponse = lifterRepository.save(lifter);
+        return ResponseEntity.status(HttpStatus.CREATED).body(lifterResponse);
     }
 
 
