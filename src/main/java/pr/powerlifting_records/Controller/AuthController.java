@@ -36,12 +36,12 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginLifter(@RequestBody LifterModel lifter){
+    public ResponseEntity<?> loginLifter(@RequestBody LifterModel lifter){
 
         Optional<LifterModel> lifterOptional = lifterRepository.findByNameAndPassword(lifter.getName(), lifter.getPassword());
 
         if (lifterOptional.isPresent()){
-            return ResponseEntity.ok("Login bem-sucedido!");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(lifterOptional);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nome ou senha inválidos.");
         }
