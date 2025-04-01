@@ -24,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerLifter(@RequestBody LifterModel lifter) {
+    public ResponseEntity<?> registerLifter(@RequestBody LifterModel lifter) {
 
         Optional<LifterModel> currentLifter = lifterRepository.findByNameAndPassword(lifter.getName(), lifter.getPassword());
         if (currentLifter.isPresent()){
