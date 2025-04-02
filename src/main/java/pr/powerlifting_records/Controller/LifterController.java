@@ -12,7 +12,6 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 
@@ -54,7 +53,8 @@ public class LifterController {
             LifterModel lifter = lifterOptional.get();
             lifter.setWeight(lifterWeight);
             lifterRepository.save(lifter);
-            return ResponseEntity.ok("Lifter atualizado com sucesso.");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(lifter);
+
         }else{
             return ResponseEntity.status(404).body("Lifter não encontrado.");
         }
