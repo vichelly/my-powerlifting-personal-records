@@ -18,7 +18,7 @@ public class CorsConfig {
         
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList("http://localhost:4200")); // Permite apenas o frontend Angular
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // Adicionado PATCH
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
         
         source.registerCorsConfiguration("/**", config);
