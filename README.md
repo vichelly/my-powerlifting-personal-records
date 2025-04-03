@@ -27,8 +27,6 @@ Cria um novo lifter.
       "password": "1234"
     }
     ```
-- **Resposta**:
-  - Status: `200 OK`
 
 #### **POST** /lifter
 Login de lifter.
@@ -43,8 +41,6 @@ Login de lifter.
       "password": "1234"
     }
     ```
-- **Resposta**:
-  - Status: `200 OK`
 
 #### **GET** /lifter
 Lista todos os lifters.
@@ -53,7 +49,6 @@ Lista todos os lifters.
   - Método HTTP: **GET**
   - URL: `/lifter`
 - **Resposta**:
-  - Status: `200 OK`
   - Corpo:
     ```json
     [
@@ -78,7 +73,6 @@ Altera o weight do lifter
   - Método HTTP: **PATCH**
   - URL: `/lifter`
 - **Resposta**:
-  - Status: `200 OK`
   - Corpo:
     ```json
     68.4
@@ -91,7 +85,6 @@ Lista todos os PRs de um lifter.
   - Método HTTP: **GET**
   - URL: `/lifter/{lifterId}/prs` (substitua `{lifterId}` pelo ID do lifter)
 - **Resposta**:
-  - Status: `200 OK`
   - Corpo:
     ```json
     [
@@ -124,7 +117,6 @@ Adiciona um novo PR para um lifter.
     }
     ```
 - **Resposta**:
-  - Status: `200 OK`
   PR adicionado com sucesso.
 
 #### **PUT** /lifter/{lifterId}/prs/{prId}
