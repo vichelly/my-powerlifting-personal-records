@@ -66,7 +66,7 @@ public class LifterController {
 
         if(lifter.isPresent()){
             List<PrModel> prs = lifter.get().getPr();
-            return ResponseEntity.ok(prs);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(prs);
         } else{
             return ResponseEntity.status(404).body("Lifter não encontrado.");
         }
@@ -81,7 +81,7 @@ public class LifterController {
             pr.setLifter(lifter); 
             lifter.getPr().add(pr); 
             lifterRepository.save(lifter);
-            return ResponseEntity.ok("PR adicionado com sucesso.");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(pr);
         } else {
             return ResponseEntity.status(404).body("Lifter não encontrado.");
         }
