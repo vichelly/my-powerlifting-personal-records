@@ -5,7 +5,7 @@ Para adicionar as informações é necessário PostgreeSQL
 
 - **Cadastrar lifters**
 - **Listar todos os lifters**
-- **Atualizar o weight**
+- **Atualizar o peso de lifter**
 - **Cadastrar PRs para um lifter**
 - **Listar PRs de um lifter**
 - **Deletar PRs de um lifter**
