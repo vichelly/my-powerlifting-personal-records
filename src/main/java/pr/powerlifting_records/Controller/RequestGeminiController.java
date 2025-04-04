@@ -1,5 +1,6 @@
 package pr.powerlifting_records.Controller;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +20,15 @@ public class RequestGeminiController {
 
         try {
             // Buscar PRs diretamente
-            ResponseEntity<List> prsResponse = restTemplate.getForEntity(prsUrl, List.class);
-            List<Map<String, Object>> prs = prsResponse.getBody();
+            ResponseEntity<List<Map<String, Object>>> prsResponse =
+                restTemplate.exchange(
+                    prsUrl,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+                );
 
+            List<Map<String, Object>> prs = prsResponse.getBody();
             if (prs == null || prs.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("Lista de PRs está vazia ou não pôde ser carregada.");
