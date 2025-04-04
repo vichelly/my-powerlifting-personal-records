@@ -10,10 +10,11 @@ import pr.powerlifting_records.Model.LifterModel;
 
 @Repository
 public interface LifterRepository extends JpaRepository<LifterModel, Long> {
-    LifterModel findByName(String name); 
+    // No repositório:
+    Optional<LifterModel> findByName(String name);
+
 
     List<LifterModel> findByNameContaining(String name);
 
     List<LifterModel> findByPassword(String password);
-    Optional<LifterModel> findByNameAndPassword(String name, String password);
 }

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pr.powerlifting_records.Model.LifterModel;
 import pr.powerlifting_records.Repository.LifterRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -17,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private LifterRepository lifterRepository;
+    private final LifterRepository lifterRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public AuthController(LifterRepository lifterRepository){
         this.lifterRepository = lifterRepository;
@@ -25,27 +28,34 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerLifter(@RequestBody LifterModel lifter) {
+        Optional<LifterModel> existingLifter = lifterRepository.findByName(lifter.getName());
 
-        Optional<LifterModel> currentLifter = lifterRepository.findByNameAndPassword(lifter.getName(), lifter.getPassword());
-        if (currentLifter.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(currentLifter);
+        if (existingLifter.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe.");
         }
-        LifterModel lifterResponse = lifterRepository.save(lifter);
-        return ResponseEntity.status(HttpStatus.CREATED).body(lifterResponse);
+
+        // Criptografa a senha antes de salvar
+        lifter.setPassword(passwordEncoder.encode(lifter.getPassword()));
+        LifterModel savedLifter = lifterRepository.save(lifter);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedLifter);
     }
 
-
     @PostMapping("/login")
-    public ResponseEntity<?> loginLifter(@RequestBody LifterModel lifter){
+    public ResponseEntity<?> loginLifter(@RequestBody LifterModel lifter) {
+        Optional<LifterModel> userOpt = lifterRepository.findByName(lifter.getName());
 
-        Optional<LifterModel> lifterOptional = lifterRepository.findByNameAndPassword(lifter.getName(), lifter.getPassword());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nome ou senha inválidos.");
+        }
 
-        if (lifterOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(lifterOptional);
+        LifterModel user = userOpt.get();
+
+        // Verifica a senha com BCrypt
+        if (passwordEncoder.matches(lifter.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nome ou senha inválidos.");
         }
     }
-    
-    
 }
+
